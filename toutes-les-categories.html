@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Galerie - Sonia Makiewicz</title>
+  <style>
+    body {
+      margin: 0;
+      padding-top: 60px;
+      font-family: 'Courier New', monospace;
+      color: #ffffff;
+      /* Fond étoilé animé conservé comme demandé par le style visuel */
+      background: url('https://i.gifer.com/9KM5.gif') repeat-y center top;
+      background-size: cover;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .message-haut {
+      text-align: center;
+      font-size: 20px;
+      margin: 20px 0;
+      padding: 10px;
+      background-color: rgba(0,0,0,0.7);
+      border-radius: 5px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      z-index: 100;
+    }
+
+    .section {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: rgba(0,0,0,0.5);
+      border-radius: 8px;
+      position: relative;
+      z-index: 100;
+    }
+
+    .galerie {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 35px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .galerie img {
+      width: 40%; /* Un peu plus grand puisqu'il y a moins d'images */
+      border: 3px solid white;
+      box-shadow: 0 0 12px rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .galerie img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Fenêtre de zoom simplifiée (pas de texte) */
+    #zoom {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0,0,0,0.95);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #zoom img {
+      max-height: 90vh;
+      max-width: 90vw;
+      border: 5px solid white;
+    }
+
+    /* Étoiles décoratives */
+    .star {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      z-index: 1;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="message-haut">Galerie Photos</div>
+
+  <div class="section">
+    <div class="galerie">
+      <img src="https://imgur.com/JtQODp2.jpg" alt="Image 1">
+      <img src="https://imgur.com/wGSkZSe.jpg" alt="Image 2">
+      <img src="https://imgur.com/dvNilM3.jpg" alt="Image 3">
+      <img src="https://imgur.com/MSXx82m.jpg" alt="Image 4">
+    </div>
+  </div>
+
+  <div id="zoom" onclick="this.style.display='none'">
+      <img src="" id="zoom-img">
+  </div>
+
+  <script>
+    // Génération des petites étoiles décoratives en fond
+    const starUrls = [
+      "https://i.gifer.com/origin/98/98767abf1efb9ba7b1155e27879fc851_w200.webp",
+      "https://i.gifer.com/origin/23/238a465012f48c55b9c96c351be7eadd_w200.webp",
+      "https://i.gifer.com/origin/ec/ecb0ad2af16787952d6868fb25db6e9d_w200.webp"
+    ];
+    for (let i = 0; i < 50; i++) {
+      const star = document.createElement("img");
+      star.src = starUrls[Math.floor(Math.random() * starUrls.length)];
+      star.className = "star";
+      star.style.top = Math.random() * 1000 + "px";
+      star.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(star);
+    }
+
+    // Gestion du clic pour zoomer (sans texte)
+    const images = document.querySelectorAll('.galerie img');
+    const zoomBox = document.getElementById('zoom');
+    const zoomImg = document.getElementById('zoom-img');
+
+    images.forEach(img => {
+      img.addEventListener('click', () => {
+        zoomImg.src = img.src;
+        zoomBox.style.display = 'flex';
+      });
+    });
+  </script>
+
+</body>
+</html>
